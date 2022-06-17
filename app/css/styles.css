@@ -1,0 +1,569 @@
+@font-face {
+    font-family: 'Joystix Monospace';
+    src: url('../fonts/JoystixMonospace-Regular.eot');
+    src: local('JoystixMonospace-Regular'),
+        url('../fonts/JoystixMonospace-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/JoystixMonospace-Regular.woff2') format('woff2'),
+        url('../fonts/JoystixMonospace-Regular.woff') format('woff'),
+        url('../fonts/JoystixMonospace-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Joystix Monospace', sans-serif;
+    cursor: none;
+}
+html, body {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #08010F;
+
+}
+h1, h2, h3, h4, h5, p, li, ul, a {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+h1 {
+    font-size: calc(18px + 18 * (100vw / 1920));
+}
+li {
+    font-size: calc(10px + 10 * (100vw / 1920));
+}
+
+
+.wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game__menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(22, 21, 22, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: visible;
+}
+.menu__body {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 0.2em;
+    pointer-events: none;
+    user-select: none;
+    text-shadow: 0 0 8px #2894ff;
+    animation: flashShadowText 1s ease 0s infinite normal none;
+}
+
+
+.info {
+    margin-top: 50px;
+    color: #fff;
+    pointer-events: none;
+    user-select: none;
+    animation: flashShadowText 1s ease 0s infinite normal none;
+    text-shadow: 0 0 8px #2894ff;
+}
+.info__item {
+    margin-bottom: 20px;
+    text-align: center;
+    line-height: 2em;
+}
+.info__item:last-child {
+    margin-bottom: 0;
+}
+
+
+.game__difficult {
+    margin-top: 50px;
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+.button {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 80px;
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    line-height: 80px;
+    color:  #2894ff;
+    background-color: rgb(32, 27, 46);
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    animation: flashText 1s ease 0s infinite normal none;
+}
+.button:last-child {
+    margin-bottom: 0;
+}
+.button span {
+    position: absolute;
+    display: block;
+    background: #2894ff;
+}
+.button._back {
+    width: 260px;
+}
+/* hover for button */
+/* button 1 */
+.button span:nth-child(1) {
+    left: 0;
+    bottom: 0;
+    width: 3px;
+    height: 100%;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.25s;
+    transition-delay: 0.2s;
+}
+.button:hover span:nth-child(1) {
+    transform: scaleY(1);
+    transform-origin: bottom;
+    transition: transform 0.25s;
+    transition-delay: 0.2s;
+}
+/* button 2 */
+.button span:nth-child(2) {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 3px;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.25s;
+    transition-delay: 0.4s;
+}
+.button:hover span:nth-child(2) {
+    transform: scaleX(1);
+    transform-origin: left;
+    transition: transform 0.25s;
+    transition-delay: 0.4s;
+}
+/* button 3 */
+.button span:nth-child(3) {
+    right: 0;
+    bottom: 0;
+    width: 3px;
+    height: 100%;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.25s;
+    transition-delay: 0.6s;
+}
+.button:hover span:nth-child(3) {
+    transform: scaleY(1);
+    transform-origin: top;
+    transition: transform 0.25s;
+    transition-delay: 0.6s;
+}
+/* button 4 */
+.button span:nth-child(4) {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+    transition-delay: 0.8s;
+}
+.button:hover span:nth-child(4) {
+    transform: scaleX(1);
+    transform-origin: right;
+    transition: transform 0.25s;
+    transition-delay: 0.8s;
+}
+.button:hover {
+    background: #2894ff;
+    color: #fff;
+    animation: none;
+    transition: all 0.4s ease 1s;
+}
+.button p, img {
+    pointer-events: none;
+    user-select: none;
+}
+@keyframes flashText {
+    0.0%{
+        color: #2894ff;
+    }
+    100%{
+        color: #2894ff;
+    }
+    49.5%{
+        color: #fff;
+    }
+}
+@keyframes flashShadowText {
+    0.0%{
+        text-shadow: 0 0 10px #2894ff;
+    }
+    100%{
+        text-shadow: 0 0 10px #2894ff;
+    }
+    49.5%{
+        text-shadow: none;
+    }
+}
+
+.game__lose {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(22, 21, 22, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: visible;
+}
+.lose__body {
+    width: 800px;
+    height: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.lose__body .title {
+    margin-bottom: 50px;
+}
+.score__field {
+    font-size: 22px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 0.2em;
+    pointer-events: none;
+    user-select: none;
+    text-shadow: 0 0 8px #2894ff;
+    animation: flashShadowText 1s ease 0s infinite normal none; 
+    margin-bottom: 50px;
+}
+
+
+.game__box {
+    width: 800px;
+    height: 800px;
+    margin: 0 auto;
+    box-shadow: 0 0 15px rgb(43, 40, 88);
+}
+
+.button.music-switch {
+    color: #fff;
+    font-size: 14px;
+    width: 180px;
+    display: inline-block;
+    line-height: 50px;
+    height: 50px;
+    position: relative;
+    margin-bottom: 0;
+}
+.button:hover.music-switch {
+    transition-delay: 0s;
+    border-radius: 30px;
+}
+.button.music-switch::before {
+    content:'';
+    position: absolute;
+    width: 60%;
+    height: 2px;
+    top: 50%;
+    left: 50%;
+    background-color: rgba(248, 8, 8, 0.7);
+    transform: translate(-50%, -50%) rotate(16deg) scale(1);
+    display: inline-block;
+}
+.button.music-switch::after {
+    content:'';
+    position: absolute;
+    width: 60%;
+    height: 2px;
+    top: 50%;
+    left: 50%;
+    background-color: rgba(248, 8, 8, 0.7);
+    transform: translate(-50%, -50%) rotate(-16deg);
+    display: inline-block;
+}
+._active.button.music-switch::after {
+    opacity: 0;
+    transition: all 0.3s ease 0s;
+}
+._active.button.music-switch::before {
+    opacity: 0;
+    transition: all 0.3s ease 0s;
+}
+
+.geme__settings {
+    display: flex;
+    width: 260px;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+.control {
+    height: 60px;
+}
+.settings {
+    display: flex;
+    justify-content: space-between;
+}
+
+.win-mode {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.win-mode img {
+    text-align: center;
+    width: 60%;
+    height: 60%;
+}
+.button:hover.win-mode {
+    transition-delay: 0s;
+    border-radius: 50%;
+    background-color: #fff;
+}
+.button:hover.win-mode img {
+    transition: 1s;
+    transform: rotate(90deg);
+}
+.button:not(:hover).win-mode img {
+    transition: 1s;
+    transform: rotate(-90deg);
+}
+
+
+.button:hover.controling {
+    transition-delay: 0s;
+}
+.button.controling {
+    position: relative;
+    height: 100%;
+    display: flex;
+    font-size: 16px;
+    line-height: 60px;
+    border-radius: 30px;
+}
+.button.controling:hover {
+    background:  rgb(32, 27, 46);
+    border-radius: 30px;
+    transition: all 0.2s ease 0s;
+}
+.button.controling .line {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 2px;
+    height: 100%;
+    background-color: rgb(15, 14, 17);
+    transition: all 0.2s ease 0s;
+    z-index: 2;
+}
+
+.button.controling:hover .line {
+    background-color: #fff;
+}
+.line-s {
+    background-color: #fff !important;
+}
+
+._mouse {
+    width: 50%;
+    background: rgb(32, 27, 46);
+}
+._mouse:hover {
+    background-color: #2894ff;
+    transition: all 0.2s ease 0s;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+._keyboards {
+    width: 50%;
+    background:  rgb(32, 27, 46);
+}
+._keyboards:hover {
+    background-color: #2894ff;
+    transition: all 0.2s ease 0s;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+._select-m {
+    background-color: #2894ff;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+._select-k {
+    background-color: #2894ff;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+._fullscreen {
+    width: 100vh;
+    height: 100vh;
+    box-shadow: none;
+    margin: 0;
+}
+
+
+.cursor {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    top: -100px;
+    left: 0;
+    transform: translate(-50%, -50%);
+    border: 5px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+}
+.cursor-point {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0);
+    border-radius: 50%;
+    background: rgb(255, 255, 255);
+    pointer-events: none;
+}
+
+.cursor_active {
+    width: 10px;
+    height: 10px;
+    animation: animCursor  .8s linear;
+}
+.cursor-point_active {
+    border: 3px dotted rgb(255, 255, 255);
+    background: transparent;
+    width: 40px;
+    height: 40px;
+    /* animation: animCursorPoint .8s linear; */
+    animation: animRotationCursor 5s infinite linear;
+}
+
+@keyframes animCursorPoint {
+    0% {
+        width: 0;
+        height: 0;
+    }
+    50% {
+        width: 20px;
+        height: 20px;
+    }
+    100% {
+        width: 40px;
+        height: 40px;
+    }
+}
+@keyframes animCursor {
+    0% {
+        width: 40px;
+        height: 40px;
+    }
+    50% {
+        width: 25px;
+        height: 25px;
+    }
+    100% {
+        width: 10px;
+        height: 10px;
+    }
+}
+@keyframes animRotationCursor {
+    0% {
+        transform: translate(-50%, -50%) rotate(0);
+        transform: transition .2s;
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+        transform: transition .2s;
+    }
+}
+
+#canvas {
+    display: block;
+    cursor: none;
+}
+
+._hidden {
+    display: none;
+    visibility: hidden;
+}
+
+._disabled {
+    user-select: none;
+    pointer-events: none;
+    opacity: 0.1;
+}
+
+
+@media (max-width: 767px) {
+    h1 {
+        font-size: calc(18px + (18 + 18*0.7) * ((100vw - 320px) / 1920));
+    }
+    li {
+        font-size: calc(10px + (10 + 10*0.7) * ((100vw - 320px) / 1920));
+    }
+    .button p {
+        font-size: 16px;
+    }
+}
+@media (max-width: 480px) {
+    .button {
+        height: 60px;
+        line-height: 60px;
+    }
+    .win-mode {
+        height: 50px;
+    }
+    .button.music-switch {
+        width: 150px;
+    }
+    .button p {
+        font-size: 12px;
+    }
+
+    .game__difficult {
+        width: 220px;
+    }
+    .geme__settings {
+        width: 220px;
+    }
+}

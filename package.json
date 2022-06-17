@@ -1,0 +1,23 @@
+{
+  "name": "spacebattleroyal",
+  "version": "1.0.0",
+  "description": "Space Battle Royal - JavaScript arcade game",
+  "scripts": {
+    "server": "parcel ./index.html -p 5500",
+    "build": "parcel build index.html --no-source-maps --no-cache",
+    "deploy": "gh-pages -d dist"
+  },
+  "keywords": [
+    "html",
+    "css",
+    "js"
+  ],
+  "author": "Maxim Baranov (MBF)",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "latest"
+  },
+  "dependencies": {
+    "gh-pages": "^4.0.0"
+  }
+}
