@@ -3,7 +3,7 @@ const ctx = canvas.getContext("2d");
 const controlButtons = document.querySelectorAll(".button");
 let start = false // start
 ;
-diff_easy = false, diff_medium = false, diff_hard = false, screen_mode = 0, spawnHeartInt = 20000, switch_control = undefined; // switch control (mouse - 0; keyboard - 1)                          
+diff_easy = false, diff_medium = false, diff_hard = false, screen_mode = 0, spawnHeartInt = 20000, menuThemeSwitch = false; // переключатедь музыки в меню, по умолч. вкл.             
 let width = 800, height = 800, timer = 0; // timer 
 // loading game resurse 
 let asteroImg = new Image(); // create asteroid img
@@ -22,14 +22,14 @@ screen_mode === 0 // back images (фон)
 // loading all audio files
 let menuTheme = loadAudio([
     "./audio/menu/menu-sound.mp3",
-    "./app/audio/menu/menu-sound.wav",
-    "./app/audio/menu/menu-sound.ogg"
-], 0.3, true, false);
+    "./audio/menu/menu-sound.wav",
+    "./audio/menu/menu-sound.ogg"
+], 0.2, true, false);
 let battleTheme = loadAudio([
     "./audio/battle/battle-sound.mp3",
     "./audio/battle/battle-sound.wav",
     "./audio/battle/battle-sound.ogg"
-], 0.2, true);
+], 0.1, true);
 let shotSound = loadAudio([
     "./audio/shot/shot-sound.mp3",
     "./audio/shot/shot-sound.wav",
@@ -44,12 +44,12 @@ let removeHealthSound = loadAudio([
     "./audio/health/remove-health.mp3",
     "./audio/health/remove-health.wav",
     "./audio/health/remove-health.ogg"
-], 0.4);
+], 0.2);
 let addHealthSound = loadAudio([
     "./audio/health/add-health.mp3",
     "./audio/health/add-health.wav",
     "./audio/health/add-health.ogg"
-], 0.3);
+], 0.4);
 let selectSound = loadAudio([
     "./audio/select/select-sound.mp3",
     "./audio/select/select-sound.wav",
@@ -59,8 +59,7 @@ let gameOverSound = loadAudio([
     "./audio/menu/game-over.mp3",
     "./audio/menu/game-over.wav",
     "./audio/menu/game-over.ogg"
-], 0.6);
-let menuThemeSwitch = true; // переключатедь музыки в меню, по умолч. вкл.
+], 0.4);
 // load audio (загрузка звуков)
 function loadAudio(audArr, vol, loop, autoplay) {
     const audio = document.createElement("audio");
@@ -110,37 +109,31 @@ spaceBackdround.addEventListener("load", ()=>{
             if (btn.classList.contains("_easy")) {
                 selectSound.stop();
                 selectSound.play();
-                if (switch_control != undefined) {
-                    console.log("difficult easy./app.");
-                    document.querySelector(".game__menu").classList.add("_hidden");
-                    menuTheme.stop();
-                    battleTheme.play();
-                    diff_easy = true;
-                } else alert("Before starting the game choose a control method");
+                console.log("difficult easy");
+                document.querySelector(".game__menu").classList.add("_hidden");
+                menuTheme.stop();
+                battleTheme.play();
+                diff_easy = true;
             }
             // medium dif
             if (btn.classList.contains("_medium")) {
                 selectSound.stop();
                 selectSound.play();
-                if (switch_control != undefined) {
-                    console.log("difficult medium./app.");
-                    document.querySelector(".game__menu").classList.add("_hidden");
-                    menuTheme.stop();
-                    battleTheme.play();
-                    diff_medium = true;
-                } else alert("Before starting the game choose a control method");
+                console.log("difficult medium");
+                document.querySelector(".game__menu").classList.add("_hidden");
+                menuTheme.stop();
+                battleTheme.play();
+                diff_medium = true;
             }
             // hard dif
             if (btn.classList.contains("_hard")) {
                 selectSound.stop();
                 selectSound.play();
-                if (switch_control != undefined) {
-                    console.log("difficult hard./app.");
-                    document.querySelector(".game__menu").classList.add("_hidden");
-                    menuTheme.stop();
-                    battleTheme.play();
-                    diff_hard = true;
-                } else alert("Before starting the game choose a control method");
+                console.log("difficult hard");
+                document.querySelector(".game__menu").classList.add("_hidden");
+                menuTheme.stop();
+                battleTheme.play();
+                diff_hard = true;
             }
             // menu switch music
             if (btn.classList.contains("music-switch")) {
@@ -173,31 +166,9 @@ spaceBackdround.addEventListener("load", ()=>{
                 // back images(фон)  
                 screen_mode === 0 ? spaceBackdround.src = "./sprites/space-background.png" : spaceBackdround.src = "./sprites/space-background-16_9.png";
             }
-            // menu switch-control
-            if (btn.classList.contains("controling")) {
-                let target = e.target;
-                if (target.classList.contains("_mouse")) {
-                    switch_control = 0;
-                    document.querySelector("._keyboards").classList.remove("_select-k");
-                    document.querySelector(".line").classList.add("line-s");
-                    selectSound.stop();
-                    selectSound.play();
-                    target.classList.add("_select-m");
-                    console.log("Select mouse switching");
-                }
-                if (target.classList.contains("_keyboards")) {
-                    switch_control = 1;
-                    document.querySelector("._mouse").classList.remove("_select-m");
-                    document.querySelector(".line").classList.add("line-s");
-                    selectSound.stop();
-                    selectSound.play();
-                    target.classList.add("_select-k");
-                    console.log("Select keyboard switching");
-                }
-            }
             // back to menu
             if (btn.classList.contains("_back")) {
-                console.log("back to menu./app.");
+                console.log("back to menu ");
                 document.querySelector(".game__lose").classList.add("_hidden");
                 selectSound.play();
                 setTimeout(()=>{
@@ -233,9 +204,7 @@ function update() {
             spawnHeartInt = randomValue(10000, 20000);
             moveAstero(-4, 4, 4, 6, 3); // min speed X = 4, max speed X = 6; min speed Y = 4, max speed X = 6; freq(частота - 3)
         }
-        if (switch_control === 0) // mouse
         mouseMovePlayer();
-        else switch_control;
         moveHearts();
         createFire();
         moveFire();
@@ -281,14 +250,17 @@ function render() {
     // draw health
     for(i in health)ctx.drawImage(healthImg, health[i].x, health[i].y, health[i].width, health[i].height);
     // score
-    drawText(`Score: ${score}`, 20, 35, "22px", "#fff");
+    drawText(`Score: ${score}`, 20, 35, "18px", "#fff");
+    // record
+    drawText(`Record: ${record}`, 20, 45, "18px", "#fff");
 }
-// TODO: ------------- Mian variabls and logic with physics -------------
-// ---------------------------  settings  ---------------------------
+// ---------------------------  Settings  ---------------------------
 let dead = false; // dead or life
 let collision = false; // collisions (столкновения)
 let isMouseDown = false; // mouse is down (зажата ли лкм)
 let score = 0; // score (очки)
+let record = localStorage.getItem("record_score") // record (рекордные очки)
+ ? localStorage.getItem("record_score") : 0;
 let astero = []; // asteroids (астероиды)
 let fire = []; // fire (выстрели)
 let expl = []; // expl (взрывы)
@@ -299,7 +271,7 @@ let fireDX = 0, fireDY = -5, fireWidth = 10, fireHeight = 45, freqSFire = 20; //
 // asteroid
 let asteroY = -100, asteroDX = 1, asteroDY = 1, asteroWidth = 65, asteroHeight = 65; // height asteroid (высота пули) - st. 85
 // health info
-let healthX = 20, healthY = 55, healthWidth = 25, healthHeight = 22, quanituHealth = 3; // quanity health (количество жизней) - st. 3
+let healthX = 20, healthY = 75, healthWidth = 25, healthHeight = 22, quanituHealth = 3; // quanity health (количество жизней) - st. 3
 // heart
 let heartY = -100, heartWidth = 25, heartHeight = 22, heartDX = 1, heartDY = 1; // change heart y (изменение положение пули по y)
 // player (игрок)
@@ -325,7 +297,7 @@ let drawText = (text, posX, posY, fSize, color)=>{
     ctx.textBaseline = "top";
 };
 // createHealth (создание полоски жизней на поле)
-let createHealth = function() {
+function createHealth() {
     for(let i = 0; i < quanituHealth; i++){
         health.push({
             x: healthX,
@@ -335,7 +307,8 @@ let createHealth = function() {
         });
         healthX += 35;
     }
-}();
+}
+createHealth();
 // player move (движение игрока)
 function mouseMovePlayer() {
     canvas.addEventListener("mousemove", (e)=>{
@@ -395,6 +368,7 @@ function moveFire() {
 }
 // check collision with player (проверка на столкновение астероида с игроком)
 function checkCollision() {
+    // collision with astero
     for(i in astero)if (astero[i].x + astero[i].width / 1.4 >= playerShip.x && astero[i].x <= playerShip.x + playerShip.width / 1.4 && astero[i].y + astero[i].height / 1.4 >= playerShip.y && astero[i].y <= playerShip.y + playerShip.height / 1.4) {
         collision = true; // столкновение
         astero[i].del = true;
@@ -429,19 +403,28 @@ function checkCollision() {
             document.querySelector(".game__lose").classList.remove("_hidden");
             document.querySelector(".score").textContent = score;
             console.log("Oops!It seems you lost^-^");
+            // Save current score
+            if (score >= record) localStorageProcessing("set", "record_score", score);
         }
     }
+    // collision with hearts
     for(i in hearts){
         if (hearts[i].x + hearts[i].width >= playerShip.x && hearts[i].x <= playerShip.x + playerShip.width / 1.4 && hearts[i].y + hearts[i].height >= playerShip.y && hearts[i].y <= playerShip.y + playerShip.height / 1.4) {
-            if (health.length < 3) hearts.splice(i, 1);
-        // health.push({
-        //     x : healthX,                    // health posX
-        //     y : healthY,                    // health posY
-        //     width : healthWidth,            // health width  (standart - 25px)
-        //     height : healthHeight           // health height (standart - 22px)
-        // })
+            if (health.length < 3) {
+                hearts.splice(i, 1);
+                quanituHealth++;
+                health = [];
+                healthX = 20;
+                addHealthSound.play();
+                createHealth();
+            }
         }
     }
+}
+// localStorage
+function localStorageProcessing(action, nameStorge, data) {
+    if (action === "set") localStorage.setItem(nameStorge, JSON.stringify(data));
+    else localStorage.getItem(nameStorge, JSON.parse(data));
 }
 // collision (анимация столкновения)
 function animCollision() {
